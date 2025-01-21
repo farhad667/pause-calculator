@@ -79,9 +79,9 @@ const PauseCalculator = () => {
             <p className="text-amber-700">Calculate your gifted interest amount based on your personal situation</p>
           </div>
 
-          {/* Container for the two columns */}
-          <div className="md:grid md:grid-cols-2 md:gap-8">
-            {/* Left Column - First half of the form */}
+          {/* Main content container */}
+          <div className="space-y-6">
+            {/* Form fields */}
             <div className="space-y-6">
               <div>
                 <label className="flex items-center gap-2 text-lg font-medium text-amber-900 mb-2">
@@ -209,8 +209,7 @@ const PauseCalculator = () => {
               </div>
             </div>
 
-            {/* Right Column - Second half of the form */}
-            <div className="mt-6 md:mt-0 space-y-6">
+            <div className="space-y-6">
               <div>
                 <label className="flex items-center gap-2 text-lg font-medium text-amber-900 mb-2">
                   <DollarSign className="text-orange-500" />
