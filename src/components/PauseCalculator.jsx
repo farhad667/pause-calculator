@@ -241,7 +241,7 @@ const PauseCalculator = () => {
 
           {/* Full-width donation section at the bottom */}
           <div className="mt-8 bg-gradient-to-r from-amber-100 to-orange-100 rounded-lg p-6">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div className="flex flex-col gap-4">
               <div>
                 <h2 className="text-xl font-medium text-amber-900 mb-2">
                   Your Principled Donation
@@ -260,7 +260,7 @@ const PauseCalculator = () => {
                 href="https://donate.burningman.org/give/508265/"
                 target="_top"
                 onClick={(e) => { e.preventDefault(); window.top.location.href = 'https://donate.burningman.org/give/508265/'; }}
-                className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 
                           rounded-lg transition-colors transform hover:scale-105 duration-200 
                           flex items-center justify-center gap-2 cursor-pointer border-none"
                 style={{ textDecoration: 'none' }}
