@@ -1,17 +1,17 @@
-"use client";
+"use client"
 
 import React, { useState, useEffect } from 'react';
-import { DollarSign, Flame, Percent, ExternalLink } from 'lucide-react';
+import { Flame, DollarSign, Percent, ExternalLink } from 'lucide-react';
 
-const PreviewCalculator = () => {
+const PauseCalculator = () => {
   const [bmDays, setBmDays] = useState(2);
   const [customBmDays, setCustomBmDays] = useState('');
   const [netWorth, setNetWorth] = useState('');
   const [rateOption, setRateOption] = useState('15.98');
   const [customRate, setCustomRate] = useState('');
-  const [bmExpenses, setBmExpenses] = useState('');
   const [pauseAmount, setPauseAmount] = useState(0);
   const [giftedInterest, setGiftedInterest] = useState(0);
+  const [bmExpenses, setBmExpenses] = useState('');
   const [principledDonation, setPrincipledDonation] = useState(0);
 
   const bmOptions = [
@@ -27,7 +27,6 @@ const PreviewCalculator = () => {
   ];
 
   const formatCurrency = (value) => {
-    if (!value) return '';
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
@@ -57,212 +56,206 @@ const PreviewCalculator = () => {
       const worth = parseFloat(netWorth.replace(/[^0-9.-]+/g, ''));
       const rate = customRate || rateOption;
       const days = customBmDays || bmDays;
-      
-      // Calculate Principled Pause
       const pause = worth * (parseFloat(days) / 100);
       setPauseAmount(Math.round(pause));
       
-      // Calculate Gifted Interest
       const interest = pause * (parseFloat(rate) / 100);
       setGiftedInterest(Math.round(interest));
       
-      // Calculate Principled Donation
       const expenses = bmExpenses ? parseFloat(bmExpenses.replace(/[^0-9.-]+/g, '')) : 0;
       setPrincipledDonation(Math.round(interest - expenses));
-    } else {
-      setPauseAmount(0);
-      setGiftedInterest(0);
-      setPrincipledDonation(0);
     }
   }, [bmDays, customBmDays, netWorth, rateOption, customRate, bmExpenses]);
 
   return (
-    <div className="min-h-screen bg-amber-50 p-8 font-sans">
-      <div className="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm shadow-xl border-2 border-amber-200 rounded-lg">
-        <div className="p-6 pt-8">
+    <div className="min-h-screen bg-amber-50 p-4 md:p-8 font-sans">
+      <div className="max-w-6xl mx-auto bg-white/90 backdrop-blur-sm shadow-xl border-2 border-amber-200 rounded-lg">
+        <div className="p-4 md:p-6 lg:p-8">
           <div className="text-center mb-8">
             <h1 className="mb-2">
-              <div className="text-4xl font-bold text-amber-900">Burning Man</div>
-              <div className="text-4xl font-bold text-amber-900">Principled Pause Calculator</div>
+              <div className="text-3xl md:text-4xl font-bold text-amber-900">Burning Man</div>
+              <div className="text-3xl md:text-4xl font-bold text-amber-900">Principled Pause Calculator</div>
             </h1>
             <p className="text-amber-700">Calculate your gifted interest amount based on your personal situation</p>
           </div>
 
-          {/* Burning Man Days Section */}
-          <div className="mb-8">
-            <label className="flex items-center gap-2 text-lg font-medium text-amber-900 mb-1">
-              <Flame className="text-orange-500" />
-              Burning Man Days
-            </label>
-            <p className="text-sm italic text-amber-700 mb-3 ml-8">
-              % of this year that I pledge to fully abide by Burning Man's Principles.
-            </p>
-            <div className="space-y-3">
-              {bmOptions.map((option) => (
-                <label key={option.value} className="flex items-center space-x-3 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="bmDays"
-                    value={option.value}
-                    checked={bmDays === option.value && !customBmDays}
-                    onChange={() => {
-                      setBmDays(option.value);
-                      setCustomBmDays('');
-                    }}
-                    className="w-4 h-4 text-orange-500 border-2 border-amber-200"
-                  />
-                  <span className="text-amber-900">{option.label}</span>
+          {/* Container for the two columns */}
+          <div className="md:grid md:grid-cols-2 md:gap-8">
+            {/* Left Column - First half of the form */}
+            <div className="space-y-6">
+              <div>
+                <label className="flex items-center gap-2 text-lg font-medium text-amber-900 mb-2">
+                  <Flame className="text-orange-500" />
+                  Your Burning Man Days
                 </label>
-              ))}
-              <div className="flex items-center space-x-3">
+                <p className="text-sm text-amber-700 mb-2 ml-8">Minimum amount of this coming year that you plan to live by Burning Man's Principles</p>
+                <div className="space-y-2">
+                  {bmOptions.map((option) => (
+                    <label key={option.value} className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="bmDays"
+                        value={option.value}
+                        checked={!customBmDays && bmDays === option.value}
+                        onChange={(e) => {
+                          setBmDays(Number(e.target.value));
+                          setCustomBmDays('');
+                        }}
+                        className="text-orange-500 focus:ring-orange-500"
+                      />
+                      <span>{option.label}</span>
+                    </label>
+                  ))}
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="bmDays"
+                      checked={!!customBmDays}
+                      onChange={() => {
+                        if (!customBmDays) setCustomBmDays('');
+                      }}
+                      className="text-orange-500 focus:ring-orange-500"
+                    />
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={customBmDays}
+                        onChange={(e) => setCustomBmDays(e.target.value)}
+                        onClick={() => {
+                          setBmDays(0);
+                        }}
+                        placeholder="Custom"
+                        className="w-24 px-2 py-1 border-2 border-amber-200 rounded-lg bg-white/50 focus:border-orange-500 focus:outline-none text-lg transition-colors"
+                      />
+                      <span>%</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <label className="flex items-center gap-2 text-lg font-medium text-amber-900 mb-2">
+                  <DollarSign className="text-orange-500" />
+                  Your Net Worth
+                </label>
                 <input
-                  type="radio"
-                  name="bmDays"
-                  checked={!!customBmDays}
-                  onChange={() => setCustomBmDays(customBmDays || '')}
-                  className="w-4 h-4 text-orange-500 border-2 border-amber-200"
+                  type="text"
+                  value={netWorth}
+                  onChange={handleNetWorthChange}
+                  placeholder="Enter amount"
+                  className="w-full px-4 py-2 border-2 border-amber-200 rounded-lg bg-white/50 focus:border-orange-500 focus:outline-none text-lg transition-colors"
                 />
-                <div className="flex items-center gap-2">
-                  <input
-                    type="number"
-                    value={customBmDays}
-                    onChange={(e) => {
-                      setCustomBmDays(e.target.value);
-                      setBmDays(null);
-                    }}
-                    placeholder="Custom"
-                    className="w-24 px-2 py-1 border-2 border-amber-200 rounded-lg focus:border-orange-500 focus:outline-none"
-                  />
-                  <span className="text-amber-900">%</span>
+              </div>
+
+              <div>
+                <label className="flex items-center gap-2 text-lg font-medium text-amber-900 mb-2">
+                  <Percent className="text-orange-500" />
+                  Your Rate of Return
+                </label>
+                <div className="space-y-2">
+                  {rateOptions.map((option) => (
+                    <label key={option.value} className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="rateOption"
+                        value={option.value}
+                        checked={!customRate && Number(rateOption) === option.value}
+                        onChange={(e) => {
+                          setRateOption(e.target.value);
+                          setCustomRate('');
+                        }}
+                        className="text-orange-500 focus:ring-orange-500"
+                      />
+                      <span>{option.label}</span>
+                    </label>
+                  ))}
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="rateOption"
+                      checked={!!customRate}
+                      onChange={() => {
+                        if (!customRate) setCustomRate('');
+                      }}
+                      className="text-orange-500 focus:ring-orange-500"
+                    />
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={customRate}
+                        onChange={(e) => setCustomRate(e.target.value)}
+                        onClick={() => {
+                          setRateOption('0');
+                        }}
+                        placeholder="Custom"
+                        className="w-24 px-2 py-1 border-2 border-amber-200 rounded-lg bg-white/50 focus:border-orange-500 focus:outline-none text-lg transition-colors"
+                      />
+                      <span>%</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <label className="flex items-center gap-2 text-lg font-medium text-amber-900 mb-2">
+                  <DollarSign className="text-orange-500" />
+                  Your Principled Pause
+                </label>
+                <div className="bg-gradient-to-r from-amber-50 to-orange-50 px-4 py-3 rounded-lg">
+                  <div className="text-2xl font-semibold text-orange-600">
+                    {netWorth ? formatCurrency(pauseAmount) : '--'}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Net Worth Section */}
-          <div className="mb-8">
-            <label className="flex items-center gap-2 text-lg font-medium text-amber-900 mb-2">
-              <DollarSign className="text-orange-500" />
-              Your Net Worth
-            </label>
-            <input
-              type="text"
-              value={netWorth}
-              onChange={handleNetWorthChange}
-              placeholder="Enter amount"
-              className="w-full px-4 py-2 border-2 border-amber-200 rounded-lg bg-white/50 focus:border-orange-500 focus:outline-none text-lg"
-            />
-          </div>
-
-          {/* Rate of Return Section */}
-          <div className="mb-8">
-            <label className="flex items-center gap-2 text-lg font-medium text-amber-900 mb-2">
-              <Percent className="text-orange-500" />
-              Your Rate of Return
-            </label>
-            <div className="space-y-3">
-              {rateOptions.map((option) => (
-                <label key={option.value} className="flex items-center space-x-3 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="rateOption"
-                    value={option.value}
-                    checked={parseFloat(rateOption) === option.value && !customRate}
-                    onChange={() => {
-                      setRateOption(option.value.toString());
-                      setCustomRate('');
-                    }}
-                    className="w-4 h-4 text-orange-500 border-2 border-amber-200"
-                  />
-                  <span className="text-amber-900">{option.label}</span>
+            {/* Right Column - Second half of the form */}
+            <div className="mt-6 md:mt-0 space-y-6">
+              <div>
+                <label className="flex items-center gap-2 text-lg font-medium text-amber-900 mb-2">
+                  <DollarSign className="text-orange-500" />
+                  Your Gifted Interest
                 </label>
-              ))}
-              <div className="flex items-center space-x-3">
-                <input
-                  type="radio"
-                  name="rateOption"
-                  checked={!!customRate}
-                  onChange={() => setCustomRate(customRate || '')}
-                  className="w-4 h-4 text-orange-500 border-2 border-amber-200"
-                />
-                <div className="flex items-center gap-2">
-                  <input
-                    type="number"
-                    value={customRate}
-                    onChange={(e) => {
-                      setCustomRate(e.target.value);
-                      setRateOption(null);
-                    }}
-                    placeholder="Custom"
-                    className="w-24 px-2 py-1 border-2 border-amber-200 rounded-lg focus:border-orange-500 focus:outline-none"
-                  />
-                  <span className="text-amber-900">%</span>
+                <div className="bg-gradient-to-r from-amber-50 to-orange-50 px-4 py-3 rounded-lg">
+                  <div className="text-2xl font-semibold text-orange-600">
+                    {netWorth ? formatCurrency(giftedInterest) : '--'}
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          {/* Principled Pause Result */}
-          <div className="mb-8">
-            <label className="flex items-center gap-2 text-lg font-medium text-amber-900 mb-2">
-              <DollarSign className="text-orange-500" />
-              Your Principled Pause
-            </label>
-            <div className="bg-gradient-to-r from-amber-50 to-orange-50 px-4 py-3 rounded-lg">
-              <div className="text-2xl font-semibold text-orange-600">
-                {pauseAmount ? formatCurrency(pauseAmount) : '--'}
+              <div>
+                <label className="flex items-center gap-2 text-lg font-medium text-amber-900 mb-2">
+                  <DollarSign className="text-orange-500" />
+                  Your Burning Man Expenses
+                </label>
+                <p className="text-sm text-amber-700 mb-2 ml-8">include tickets, transport and camp fees and expenses</p>
+                <input
+                  type="text"
+                  value={bmExpenses}
+                  onChange={handleBmExpensesChange}
+                  placeholder="Enter amount"
+                  className="w-full px-4 py-2 border-2 border-amber-200 rounded-lg bg-white/50 focus:border-orange-500 focus:outline-none text-lg transition-colors"
+                />
               </div>
             </div>
           </div>
 
-          {/* Gifted Interest Result */}
-          <div className="mb-8">
-            <label className="flex items-center gap-2 text-lg font-medium text-amber-900 mb-2">
-              <DollarSign className="text-orange-500" />
-              Your Gifted Interest
-            </label>
-            <div className="bg-gradient-to-r from-amber-50 to-orange-50 px-4 py-3 rounded-lg">
-              <div className="text-2xl font-semibold text-orange-600">
-                {giftedInterest ? formatCurrency(giftedInterest) : '--'}
-              </div>
-            </div>
-          </div>
-
-          {/* Burning Man Expenses Input */}
-          <div className="mb-8">
-            <label className="flex items-center gap-2 text-lg font-medium text-amber-900 mb-1">
-              <DollarSign className="text-orange-500" />
-              Your Burning Man Expenses
-            </label>
-            <p className="text-sm text-amber-700 mb-2 ml-8">
-              Include tickets, transport and camp fees
-            </p>
-            <input
-              type="text"
-              value={bmExpenses}
-              onChange={handleBmExpensesChange}
-              placeholder="Enter amount"
-              className="w-full px-4 py-2 border-2 border-amber-200 rounded-lg bg-white/50 focus:border-orange-500 focus:outline-none text-lg"
-            />
-          </div>
-
-          {/* Final Donation Section */}
-          <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-lg p-6">
-            <div className="flex items-center gap-8">
-              <div className="flex-1">
+          {/* Full-width donation section at the bottom */}
+          <div className="mt-8 bg-gradient-to-r from-amber-100 to-orange-100 rounded-lg p-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div>
                 <h2 className="text-xl font-medium text-amber-900 mb-2">
-                  Your Principled Donation*
+                  Your Principled Donation
                 </h2>
-                <div className="text-4xl font-bold text-orange-600 mb-2">
-                  {principledDonation ? (
-                    principledDonation > 0 ? 
-                    formatCurrency(principledDonation) : 
-                    "None. Thanks for your expenses to get to BRC!"
-                  ) : '--'}
-                </div>
-                <p className="text-sm text-amber-700">
-                  *Your Gifted Interest Amount minus Your Burning Man Expenses
+                <p className="text-sm text-amber-700 mb-2">
+                  Your Gifted Interest Amount minus Your Burning Man Expenses
                 </p>
+                <div className="text-3xl md:text-4xl font-bold text-orange-600">
+                  {!netWorth ? '--' : 
+                    principledDonation > 0 
+                      ? formatCurrency(principledDonation)
+                      : "None. Thanks for all your efforts to get to BRC! ❤️ 🔥"}
+                </div>
               </div>
               <a
                 href="https://donate.burningman.org/give/508265/"
@@ -270,7 +263,7 @@ const PreviewCalculator = () => {
                 onClick={(e) => { e.preventDefault(); window.top.location.href = 'https://donate.burningman.org/give/508265/'; }}
                 className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 
                           rounded-lg transition-colors transform hover:scale-105 duration-200 
-                          flex items-center gap-2 cursor-pointer border-none"
+                          flex items-center justify-center gap-2 cursor-pointer border-none"
                 style={{ textDecoration: 'none' }}
               >
                 Donate
@@ -284,4 +277,4 @@ const PreviewCalculator = () => {
   );
 };
 
-export default PreviewCalculator;
+export default PauseCalculator;
