@@ -261,7 +261,7 @@ const PauseCalculator = () => {
                 target="_top"
                 onClick={(e) => { e.preventDefault(); window.top.location.href = 'https://donate.burningman.org/give/508265/'; }}
                 className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 
-                          rounded-lg transition-colors transform hover:scale-105 duration-200 
+                          rounded-lg transition-colors duration-200 
                           flex items-center justify-center gap-2 cursor-pointer border-none"
                 style={{ textDecoration: 'none' }}
               >
