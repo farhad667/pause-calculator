@@ -257,7 +257,7 @@ const PreviewCalculator = () => {
                   {principledDonation ? (
                     principledDonation > 0 ? 
                     formatCurrency(principledDonation) : 
-                    "None. Your costs are enough!"
+                    "None. Thanks for your expenses to get to BRC!"
                   ) : '--'}
                 </div>
                 <p className="text-sm text-amber-700">
