@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { DollarSign, Flame, Percent, ExternalLink } from 'lucide-react';
 
