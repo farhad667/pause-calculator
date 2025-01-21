@@ -69,7 +69,7 @@ const PauseCalculator = () => {
 
   return (
     <div className="min-h-screen bg-amber-50 p-4 md:p-8 font-sans">
-      <div className="max-w-6xl mx-auto bg-white/90 backdrop-blur-sm shadow-xl border-2 border-amber-200 rounded-lg">
+      <div className="max-w-6xl mx-auto bg-white shadow-xl border-2 border-amber-200 rounded-lg">
         <div className="p-4 md:p-6 lg:p-8">
           <div className="text-center mb-8">
             <h1 className="mb-2">
@@ -125,7 +125,7 @@ const PauseCalculator = () => {
                           setBmDays(0);
                         }}
                         placeholder="Custom"
-                        className="w-24 px-2 py-1 border-2 border-amber-200 rounded-lg bg-white/50 focus:border-orange-500 focus:outline-none text-lg transition-colors"
+                        className="w-24 px-2 py-1 border-2 border-amber-200 rounded-lg bg-white focus:border-orange-500 focus:outline-none text-lg transition-colors"
                       />
                       <span>%</span>
                     </div>
@@ -143,7 +143,7 @@ const PauseCalculator = () => {
                   value={netWorth}
                   onChange={handleNetWorthChange}
                   placeholder="Enter amount"
-                  className="w-full px-4 py-2 border-2 border-amber-200 rounded-lg bg-white/50 focus:border-orange-500 focus:outline-none text-lg transition-colors"
+                  className="w-full px-4 py-2 border-2 border-amber-200 rounded-lg bg-white focus:border-orange-500 focus:outline-none text-lg transition-colors"
                 />
               </div>
 
