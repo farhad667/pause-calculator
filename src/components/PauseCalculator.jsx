@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { DollarSign, Flame, Percent, ExternalLink } from 'lucide-react';
 
@@ -255,7 +257,7 @@ const PreviewCalculator = () => {
                   {principledDonation ? (
                     principledDonation > 0 ? 
                     formatCurrency(principledDonation) : 
-                    "None. You're Good, Thx!"
+                    "None. Your costs are enough!"
                   ) : '--'}
                 </div>
                 <p className="text-sm text-amber-700">
