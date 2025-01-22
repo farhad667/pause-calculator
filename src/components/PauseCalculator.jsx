@@ -111,21 +111,29 @@ const PauseCalculator = () => {
                       type="radio"
                       name="bmDays"
                       checked={!!customBmDays}
-                      onChange={() => {
-                        if (!customBmDays) setCustomBmDays('');
-                      }}
+                      onChange={(e) => {
+                          if (!customBmDays) setCustomBmDays('0');
+                        }}
                       className="text-orange-500 focus:ring-orange-500"
                     />
                     <div className="flex items-center gap-2">
                       <input
                         type="text"
                         value={customBmDays}
-                        onChange={(e) => setCustomBmDays(e.target.value)}
+                        onFocus={() => {
+                          setCustomBmDays('');
+                          setBmDays(0);
+                        }}
+                        onChange={(e) => {
+                          setCustomBmDays(e.target.value);
+                          setBmDays(0);
+                        }}
                         onClick={() => {
+                          setCustomBmDays('');
                           setBmDays(0);
                         }}
                         placeholder="Custom"
-                        className="w-24 px-2 py-1 border-2 border-amber-200 rounded-lg bg-white focus:border-orange-500 focus:outline-none text-lg transition-colors"
+                        className="w-24 px-2 py-1 border-2 border-amber-200 rounded-lg bg-white focus:border-orange-500 focus:outline-none text-lg transition-colors text-black"
                       />
                       <span>%</span>
                     </div>
@@ -143,7 +151,7 @@ const PauseCalculator = () => {
                   value={netWorth}
                   onChange={handleNetWorthChange}
                   placeholder="Enter amount"
-                  className="w-full px-4 py-2 border-2 border-amber-200 rounded-lg bg-white focus:border-orange-500 focus:outline-none text-lg transition-colors"
+                  className="w-full px-4 py-2 border-2 border-amber-200 rounded-lg bg-white focus:border-orange-500 focus:outline-none text-lg transition-colors text-black"
                 />
               </div>
 
@@ -174,17 +182,25 @@ const PauseCalculator = () => {
                       type="radio"
                       name="rateOption"
                       checked={!!customRate}
-                      onChange={() => {
-                        if (!customRate) setCustomRate('');
-                      }}
+                      onChange={(e) => {
+                          if (!customRate) setCustomRate('0');
+                        }}
                       className="text-orange-500 focus:ring-orange-500"
                     />
                     <div className="flex items-center gap-2">
                       <input
                         type="text"
                         value={customRate}
-                        onChange={(e) => setCustomRate(e.target.value)}
+                        onFocus={() => {
+                          setCustomRate('');
+                          setRateOption('0');
+                        }}
+                        onChange={(e) => {
+                          setCustomRate(e.target.value);
+                          setRateOption('0');
+                        }}
                         onClick={() => {
+                          setCustomRate('');
                           setRateOption('0');
                         }}
                         placeholder="Custom"
